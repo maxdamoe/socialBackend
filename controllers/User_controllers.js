@@ -1,21 +1,16 @@
-// const { builtinModules } = require('module');
 const { User } = require('../models');
 
 const userController = {
 
-//GET all users
+// GET ALL USERS
 getAllUsers(req, res){
     User.find({})
-    // .populate({
-    //     path: 'thoughts',
-    //     select: '-__v',
-    // })
     .select('-__v')
     .then(dbData => res.json(dbData))
     .catch(err => res.status(400).json(err))
 },
 
-//GET single user
+// GET A SINGLE USER
 getOneUser({params}, res){
     User.findOne({_id: params.id})
     .populate({
@@ -26,15 +21,15 @@ getOneUser({params}, res){
     .then(dbData => res.json(dbData))
 },
 
-//POST new user
-postNewUser({body}, res){
+// POST (CREATE) A NEW USER
+createNewUser({body}, res){
     User.create(body).then(dbData => {
         res.json(dbData)
         .catch(err => res.status(400).json(err))
     })
 },
-
-//PUT-UPDATE user
+ 
+// UPDATE A USER
 updateUser({params, body}, res){
     User.findOneAndUpdate({_id: params.id}, body, {new: true})
     .then(dbData => {
@@ -45,7 +40,7 @@ updateUser({params, body}, res){
     }).catch(err => res.status(400).json(err))
 },
 
-//DELETE user
+// DELETE A USER
 deleteUser({params}, res){
     User.findOneAndDelete({_id: params.id})
     .then(dbData => {
@@ -57,7 +52,7 @@ deleteUser({params}, res){
 },
 
 
-//POST new friend to user
+// POST (ADD) NEW FRIEND TO USER
 addFriend({params}, res){
     console.log(params.userId);
     User.findOneAndUpdate(
@@ -76,7 +71,7 @@ addFriend({params}, res){
 },
 
 
-//DELETE friend from user 
+// DELETE A FRIEND FROM SPECIFIC USER
 deleteFriend({params}, res){
     User.findOneAndUpdate(
         {_id: params.userId},

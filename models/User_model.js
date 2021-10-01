@@ -27,7 +27,6 @@ const userSchema = new Schema({
         getters: true,
         virtuals: true,
     },
-    // prevents virtuals from creating duplicate of _id as `id`
     id: false
 });
 
